@@ -36,7 +36,9 @@ export default async function RootLayout({
           <RegisterModal />
           <LoginModal />
         </ClientOnly>
-        <main>{children}</main>
+        <main>
+          <div className="pt-10 pb-20">{children}</div>
+        </main>
         <footer></footer>
       </body>
     </html>
