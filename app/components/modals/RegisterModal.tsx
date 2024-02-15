@@ -18,7 +18,7 @@ import Button from "../Button";
 import { signIn } from "next-auth/react";
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
-  const loginModal = useLoginModal()
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -39,7 +39,9 @@ const RegisterModal = () => {
     axios
       .post("/api/register", data)
       .then(() => {
+        toast.success("Success!");
         registerModal.onClose();
+        loginModal.onOpen();
       })
       .catch((error) => {
         toast.error("Something went wrong!");
@@ -49,10 +51,10 @@ const RegisterModal = () => {
       });
   };
 
-  const toggle = useCallback(()=>{
-    loginModal.onOpen()
-    registerModal.onClose()
-  },[loginModal,registerModal])
+  const toggle = useCallback(() => {
+    loginModal.onOpen();
+    registerModal.onClose();
+  }, [loginModal, registerModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
