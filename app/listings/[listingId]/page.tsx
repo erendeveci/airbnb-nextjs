@@ -12,8 +12,8 @@ interface IParams {
 
 const ListingPage = async ({ params }: { params: IParams }) => {
   const listing = await getListingById(params);
-  const reservations = await getReservations(params)
-  
+  const reservations = await getReservations(params);
+
   const currentUser = await getCurrentUser();
   if (!listing) {
     return (
@@ -22,6 +22,7 @@ const ListingPage = async ({ params }: { params: IParams }) => {
       </ClientOnly>
     );
   }
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   return <ListingClient reservations={reservations} listing={listing} currentUser={currentUser} />;
 };
 
