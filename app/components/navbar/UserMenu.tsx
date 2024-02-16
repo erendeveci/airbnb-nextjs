@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
@@ -11,6 +11,7 @@ import { signOut } from "next-auth/react";
 import { SafeUser } from "@/app/types";
 import useRentModal from "@/app/hooks/useRentModal";
 import { useRouter } from "next/navigation";
+import { useOnClickOutside } from "@/app/hooks/useOnClickOutside";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
@@ -26,6 +27,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
+
+  const dropdownMenuRef = useRef<HTMLDivElement | null>(null);
+  useOnClickOutside(dropdownMenuRef, () => setIsOpen(false));
 
   const onRent = useCallback(() => {
     if (!currentUser) return loginModal.onOpen();
@@ -80,6 +84,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 
       {isOpen && (
         <div
+          ref={dropdownMenuRef}
           className="
                 absolute
                 rounded-xl
